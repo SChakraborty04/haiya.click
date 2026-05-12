@@ -1,0 +1,20 @@
+## Task list
+
+- [x] Express app bootstrap with JSON, URL-encoded, and cookie parsing
+- [x] Auth routes wired for register, login, logout, and get-me
+- [x] Auth controller responses with standard success shapes
+- [x] Auth service logic for register, login, refresh, logout, forgot password, verify email, and get-me
+- [x] DTO validation for login/register with shared base validator
+- [x] Auth middleware for access-token verification
+- [x] User, poll, question, and response Mongoose models
+- [x] MongoDB connection helper
+- [x] Valkey (Redis) configs for development and production
+- [x] API error/response helpers
+- [x] JWT utilities for access/refresh/reset tokens
+- [x] Email utility scaffold using nodemailer
+- [ ] Poll creation logic
+  - [X] Poll Controllers
+  - [X] Poll DTO
+  - [X] Middlewares
+  - [ ] routes (Poll engine left)
+  - [X] services

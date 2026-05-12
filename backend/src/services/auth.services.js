@@ -12,7 +12,7 @@ import User from "../models/user.model.js";
 const hashToken = (token) =>
   crypto.createHash("sha256").update(token).digest("hex");
 
-const register = async ({ name, email, password, role }) => {
+const register = async ({ name, email, password }) => {
   const existing = await User.findOne({ email });
   if (existing) throw ApiError.conflict("Email already exisits");
 
