@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "deploy": "tar -cf deploy.tar --exclude node_modules --exclude .env . && caprover deploy --caproverUrl https://captain.projects.sandipan.ch --appName haiya-backend --appToken a754574ee6c1846d9a15ae40107b638376ff32b326f6dac6a3606615f13f9f32 --tarFile deploy.tar"
   },
   "keywords": [],
   "author": "",
