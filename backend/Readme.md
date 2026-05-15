@@ -12,15 +12,28 @@
 - [x] API error/response helpers
 - [x] JWT utilities for access/refresh/reset tokens
 - [x] Email utility scaffold using nodemailer
-- [ ] Poll creation logic
+- [X] Poll creation logic
   - [X] Poll Controllers
   - [X] Poll DTO
   - [X] Middlewares
-  - [ ] routes (Poll engine left)
+  - [X] routes (Poll engine left)
   - [X] services
 - Question Engine logic
-  - Question controllers
-  - Question DTO
-  - Middlewares
-  - routes
-  - services
+  - [X] Question controllers
+  - [X] Question DTO
+  - [X] Middlewares
+  - [X] routes
+  - [X] services
+- Response Engine logic
+  - [X] Response controllers
+  - [X] Response DTO
+  - [X] Middlewares
+  - [X] routes
+  - [X] services
+- Analytics Engine logic
+  - [X] Analytics controllers
+  - [X] Analytics DTO
+  - [X] Middlewares
+  - [X] routes
+  - [X] services
+
