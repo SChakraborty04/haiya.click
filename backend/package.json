@@ -1,6 +1,6 @@
 {
   "name": "backend-haiya",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Backend server for haiya.click",
   "main": "server.js",
   "scripts": {
