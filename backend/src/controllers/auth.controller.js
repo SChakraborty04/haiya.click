@@ -11,7 +11,8 @@ const login = async (req, res) => {
 
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 
@@ -29,4 +30,22 @@ const getMe = async (req, res) => {
   ApiResponse.ok(res, "User Profile", user);
 };
 
-export { register, login, logout, getMe };
+const refresh = async (req, res) => {
+  const token = req.cookies?.refreshToken;
+  const { accessToken } = await authService.refresh(token);
+  ApiResponse.ok(res, "Token refreshed", { accessToken });
+};
+
+const verifyEmail = async (req, res) => {
+  const { token } = req.query;
+  await authService.verifyEmail(token);
+  ApiResponse.ok(res, "Email verified successfully");
+};
+
+const resendVerification = async (req, res) => {
+  const { email } = req.body;
+  await authService.resendVerification(email);
+  ApiResponse.ok(res, "Verification email resent successfully");
+};
+
+export { register, login, logout, getMe, refresh, verifyEmail, resendVerification };

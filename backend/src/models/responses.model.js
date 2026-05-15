@@ -29,3 +29,5 @@ const responseSchema = new mongoose.Schema({
         }
     ]
 },{timestamps: true});
+
+export default mongoose.model("Response", responseSchema);

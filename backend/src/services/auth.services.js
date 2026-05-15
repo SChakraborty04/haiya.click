@@ -1,4 +1,4 @@
-// import { sendVerificationEmail } from "../../common/config/email.js";
+import { sendVerificationEmail } from "../utils/email.utils.js";
 import ApiError from "../utils/api.error.js";
 import crypto from "node:crypto";
 import {
@@ -22,16 +22,15 @@ const register = async ({ name, email, password }) => {
     name,
     email,
     password,
-    role,
     verificationToken: hashedToken,
   });
 
   
-//   try {
-//     await sendVerificationEmail(email, token);
-//   } catch (error) {
-//     console.error(error);
-//   }
+  try {
+    await sendVerificationEmail(email, name, rawToken);
+  } catch (error) {
+    console.error("Email sending failed:", error);
+  }
 
   const userObj = user.toObject();
   delete userObj.password;
@@ -52,9 +51,9 @@ const login = async ({ email, password }) => {
   const isMatch = await user.comparePassword(password);
   if (!isMatch) throw ApiError.unauthorized("Invalid email or password");
 
-  // if (!user.isVerified) {
-  //   throw ApiError.forbidden("Please verify your email before loggin");
-  // }
+  if (!user.isVerified) {
+    throw ApiError.forbidden("Please verify your email before loggin");
+  }
 
   const accessToken = generateAccessToken({ id: user._id});
   const refreshToken = generateRefreshToken({ id: user._id });
@@ -113,11 +112,29 @@ const verifyEmail = async (token) => {
     "+verificationToken",
   );
 
-  //if user not found
+  if (!user) throw ApiError.unauthorized("Invalid or expired verification token");
+
   user.isVerified = true;
   user.verificationToken = undefined;
   await user.save();
   return user;
+};
+
+const resendVerification = async (email) => {
+  const user = await User.findOne({ email });
+  if (!user) throw ApiError.notFound("User not found");
+  if (user.isVerified) throw ApiError.badRequest("Account is already verified");
+
+  const { rawToken, hashedToken } = generateResetToken();
+  user.verificationToken = hashedToken;
+  await user.save();
+
+  try {
+    await sendVerificationEmail(user.email, user.name, rawToken);
+  } catch (error) {
+    console.error("Resend Email sending failed:", error);
+    throw ApiError.internal("Failed to send verification email");
+  }
 };
 
 const getMe = async (userId) => {
@@ -126,4 +143,4 @@ const getMe = async (userId) => {
   return user;
 };
 
-export { register, login, refresh, logout, forgotPassword, getMe, verifyEmail };
+export { register, login, refresh, logout, forgotPassword, getMe, verifyEmail, resendVerification };

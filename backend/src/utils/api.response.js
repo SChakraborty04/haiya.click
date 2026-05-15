@@ -16,6 +16,14 @@ class ApiResponse {
         })
     }
 
+    static accepted(res, message, data = null){
+        return res.status(202).json({
+            success: true,
+            message,
+            data
+        })
+    }
+
     static noContent(res){
         return res.status(204).send()
     }
@@ -23,6 +31,14 @@ class ApiResponse {
         return res.status(500).json({
             success: false,
             message
+        })
+    }
+
+    static noPermission(res, message="No Permission", data = null){
+        return res.status(403).json({
+            success: false,
+            message,
+            data
         })
     }
 

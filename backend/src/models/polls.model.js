@@ -18,7 +18,8 @@ const pollSchema = new mongoose.Schema(
             required: true,
             unique: true,
             lowercase: true,
-            trim: true
+            trim: true,
+            index:true
         },
         isAnonymous:{
             type: Boolean,
@@ -28,13 +29,40 @@ const pollSchema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
+        duration:{
+            type: Number, // in seconds
+            required: true
+        },
         expiryDate:{
             type: Date,
-            required: true
+            // required: true // Removed required because it will be calculated on start
+        },
+        isStarted:{
+            type: Boolean,
+            default: false
         },
         isPublished:{
             type: Boolean,
             default: false
+        },
+        resultsReady:{
+            type: Boolean,
+            default: false
+        },
+        views: {
+            type: Number,
+            default: 0
+        },
+        maxConcurrentUsers: {
+            type: Number,
+            default: 0
+        },
+        totalVoters: {
+            type: Number,
+            default: 0
+        },
+        startedAt: {
+            type: Date
         }
     },{ timestamps: true }
 )

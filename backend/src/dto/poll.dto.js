@@ -6,7 +6,8 @@ class PollDto extends BaseDto {
         title: Joi.string().trim().min(2).max(100).required(),
         isAnonymous: Joi.boolean().default(false),
         requireAuth: Joi.boolean().default(false),
-        expiryDate: Joi.date().greater("now").required()
+        expiryDate: Joi.date().greater("now").optional(),
+        duration: Joi.number().required()
     })
 }
 
