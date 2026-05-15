@@ -8,7 +8,8 @@ import questionRoute from "./routes/question.routes.js";
 const app = express();
 app.set("trust proxy", true);
 
-const allowed = ["http://localhost:5173", "http://localhost:3000", process.env.FRONTEND_URL];
+const allowedOrigins = process.env.FRONTEND_URL?.split(",") || [];
+const allowed = ["http://localhost:5173", "http://localhost:3000", ...allowedOrigins];
 
 app.use(cors({
   origin: (origin, cb) => cb(null, !origin || allowed.includes(origin)),
